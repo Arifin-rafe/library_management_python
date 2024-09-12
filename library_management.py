@@ -96,7 +96,11 @@ class User(Book):
                     ):
                     print("Sorry no id found")
                 else:
-                    print("Welcome to the library {}".format(user.get("user_name")))
+                    print("Welcome to the library--- {}".format(user.get("user_name")))
+                    print("(1) Borrow book")        
+                    print("(2) Return book")
+                    print('(3) Show all books')                                       
+                    print(" 0 to logout")
                     
         else:           
             return print('Create a Id first')
@@ -149,21 +153,21 @@ class User(Book):
 
     def return_book(self):
         for return_book in User.borrow_book_dict:
-            if self.return_book_name == return_book["book_name"]:
+            if self.return_book_name == return_book["book_name"]: 
                 for books in Book.book_dict:
                     if books["book_name"] == self.return_book_name:
                         books["book_copies"] = books["book_copies"] + 1
                         if books["book_copies"] > 0:
                             books["available"] = "yes"
-            else:
-                print("not available")
+                
+        else:
+            print("not available")
+            print(User.borrow_book_dict)
 
 class Librarian(Book):
     def __init__(self, modified_book_name=None):
         self.update_book_name = modified_book_name
-        # self.delete_book_name = modified_book_name
-    
-        
+            
     def update_book(self):
         for update_book in Book.book_dict:
             if self.update_book_name == update_book["book_name"]:
@@ -247,10 +251,6 @@ while active_user:
                 else:
                     running = False
                 while running:                                                        
-                    print("(1) Borrow book")        
-                    print("(2) Return book")
-                    print('(3) Show all books') 
-                    print("0 to logout")
                     print()       
                     user_choice = input("Choose an option : ")
                     if user_choice == "1":
