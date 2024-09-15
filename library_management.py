@@ -201,7 +201,8 @@ class Librarian(Book):
             if user["user_name"] == self.update_book_name:
                 del User.user_librarian_dict[index] 
                 print("User deleted successfully")
-                
+        else:
+            print("Sorry No user found")   
     def show_users(self):
         print("--------Kn0wledge Library USERS list--------")
         print()
