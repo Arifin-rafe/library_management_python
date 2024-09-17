@@ -1,7 +1,6 @@
 import sqlite3
 class Book:
     book_dict = []
-
     def __init__(
         self,
         book_name=None,
