@@ -91,17 +91,12 @@ class User(Book):
         if len(User.user_librarian_dict) > 0:
             for user in User.user_librarian_dict:                   
                 if (
-                        user.get("user_name") != self.user_name
-                        and user.get("user_password") != self.user_password
+                        user.get("user_name") == self.user_name
+                        and user.get("user_password") == self.user_password
                     ):
-                    print("Sorry no id found")
+                    print("Welcome to the library--- {}".format(user.get("user_name")))                   
                 else:
-                    print("Welcome to the library--- {}".format(user.get("user_name")))
-                    print("(1) Borrow book")        
-                    print("(2) Return book")
-                    print('(3) Show all books')                                       
-                    print(" 0 to logout")
-                    
+                    print("Sorry no id found")                   
         else:           
             return print('Create a Id first')
           
@@ -244,14 +239,18 @@ while active_user:
             if user_sign_in_choice == "1":
                 user_name_input = input("Please input user name : ")
                 user_password_input = input("Please input user password : ")
-                my_user_login = User(user_name_input, user_password_input, None, None)
-                
+                my_user_login = User(user_name_input, user_password_input, None, None)            
                 my_user_login.login()
+                #solve here
                 if len(User.user_librarian_dict) > 0:
                     running = True
                 else:
                     running = False
-                while running:                                                        
+                while running: 
+                    print("(1) Borrow book")        
+                    print("(2) Return book")
+                    print('(3) Show all books')                                       
+                    print(" 0 to logout")                                                       
                     print()       
                     user_choice = input("Choose an option : ")
                     if user_choice == "1":
@@ -281,7 +280,7 @@ while active_user:
                         print("Sorry password wont match!!!")
         elif number_input == "2":
                 print("1. Login as librarian")
-                # print("2. Create Account as librarian")
+                
                 user_sign_in_choice = input("Please choose from here : ")
                 if user_sign_in_choice == "1":
                     librarian_name_input = input("Please input librarian name : ")
