@@ -133,7 +133,7 @@ def sql_delete_book():
             connection.commit()
             connection.close()
     else:
-        print("Sorry no book found with thi name")
+        print("Sorry no book found with this name")
         
 def sql_delete_user():
     connection = sqlite3.connect("library.db")
