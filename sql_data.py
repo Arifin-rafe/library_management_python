@@ -111,7 +111,6 @@ def sql_update_user():
             print("No user found")
         else:
             user_name = input ("Enter user name : ")
-            # user_id =id(user_name)
             user_password = input ("Enter user password : ")
             role = input ("Enter user or admin: ")
             my_cursor.execute(update_query,(user_name,user_password,role,user_name_update))
