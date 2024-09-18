@@ -16,6 +16,14 @@ def sql_create_table_user():
     print('User Table created...')
     connection.close()
     
+def sql_create_table_borrow_book():
+    connection = sqlite3.connect("library.db")
+    my_cursor = connection.cursor()
+    table_query = '''CREATE TABLE IF NOT EXISTS borrow_book (book_id integer, book_name text,book_author_name text,book_copies integer)'''
+    my_cursor.execute(table_query)
+    print('Borrow book Table created...')
+    connection.close()
+    
 def sql_create_user():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -37,6 +45,10 @@ def sql_create_user():
             connection.close()
     else:
         print('Check your passwords')
+
+def sql_login():
+    pass
+        
 def sql_add_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -67,7 +79,7 @@ def sql_update_book():
     if table_list == []:
         print('No table found')
     else:
-        select = "SELECT * FROM books where book_name=?"
+        select = "SELECT * FROM books WHERE book_name=?"
         my_cursor.execute(select,(book_name_update,))
         row = my_cursor.fetchone()
         if row == None:
@@ -82,6 +94,7 @@ def sql_update_book():
             print("Data Updated to DB")
             connection.commit()
             connection.close()
+            
 def sql_update_user():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -112,11 +125,28 @@ def sql_delete_book():
     book_name = input ("Enter book name you want to delete : ")
     delete_query = "DELETE FROM books WHERE book_name=?"
     table_list = my_cursor.execute("""select name from sqlite_master where type='table' and name = 'books';""").fetchall()
+    if book_name == delete_query:
+        if table_list == []:
+            print('Sorry no table found')
+        else:
+            my_cursor.execute(delete_query,(book_name,))
+            print("Book Data deleted in DB")
+            connection.commit()
+            connection.close()
+    else:
+        print("Sorry no book found with thi name")
+        
+def sql_delete_user():
+    connection = sqlite3.connect("library.db")
+    my_cursor = connection.cursor()
+    user_name = input ("Enter user name you want to delete : ")
+    delete_query = "DELETE FROM users WHERE user_name=?"
+    table_list = my_cursor.execute("""select name from sqlite_master where type='table' and name = 'users';""").fetchall()
     if table_list == []:
         print('Sorry no table found')
     else:
-        my_cursor.execute(delete_query,(book_name,))
-        print("Data updated in DB")
+        my_cursor.execute(delete_query,(user_name,))
+        print("User Data deleted in DB")
         connection.commit()
         connection.close()
     
@@ -134,6 +164,7 @@ def sql_show_books():
         print(tabulate.tabulate(rows,headers=("Id","Name","Author Name","Book Genre","Book ISBN","Copies","Available")))
         connection.commit()
         connection.close()
+        
 def sql_show_users():
     print('-------Book list from DB------')
     connection = sqlite3.connect("library.db")

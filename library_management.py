@@ -191,12 +191,14 @@ class Librarian(Book):
             #     print("Sorry book not found")
 
     def delete_book(self):
+        sql_delete_book()
         for index, book in enumerate(Book.book_dict):
             if book["book_name"] == self.update_book_name:
                 del Book.book_dict[index] 
                 print("Book deleted successfully")
-        sql_delete_book()
+        
     def delete_user(self):
+        sql_delete_user()
         for index, user in enumerate(User.user_librarian_dict):
             if user["user_name"] == self.update_book_name:
                 del User.user_librarian_dict[index] 
