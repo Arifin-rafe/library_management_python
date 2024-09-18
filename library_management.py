@@ -102,6 +102,7 @@ class User(Book):
             return print('Create a Id first')
           
     def create_id(self):
+        sql_create_user()
         User.user_librarian_dict.append(self.get_id())
         print("Id created successfully")
         print("Please login now")
@@ -178,6 +179,7 @@ class Librarian(Book):
         #     else:
         #         print("Sorry book not found")
     def update_user(self):
+        sql_update_user()
         for update_user in User.user_librarian_dict:
             if self.update_book_name == update_user["user_name"]:
                 updated_user_name = input("Enter updated name : ")
@@ -202,6 +204,7 @@ class Librarian(Book):
         else:
             print("Sorry No user found")   
     def show_users(self):
+        sql_show_users()
         print("--------Kn0wledge Library USERS list--------")
         print()
         if len(User.user_librarian_dict) > 0:
