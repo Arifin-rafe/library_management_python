@@ -148,13 +148,3 @@ def sql_show_users():
         print(tabulate.tabulate(rows,headers=("Id","User Name","User password","Role")))
         connection.commit()
         connection.close()
-# while True:
-#     print("1. Add")
-#     print("2. show book")
-#     print("3. Update")
-#     print("4. Delete")
-#     my_in = input("choose : ")
-#     if my_in == "1":
-#         sql_add_book()
-#     elif my_in == '0':
-#         break
