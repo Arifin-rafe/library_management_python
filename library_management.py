@@ -32,6 +32,7 @@ class Book:
 
     def add_book(self):
         Book.book_dict.append(self.get_book_info())
+        sql_add_book()
         print()
         print("Added successfully")
         print()
@@ -63,7 +64,7 @@ class Book:
                 book["available"],
             )
             print("-----------------------------------------")
-
+        sql_show_books()
 
 class User(Book):
     borrow_book_dict = []
@@ -164,17 +165,18 @@ class Librarian(Book):
         self.update_book_name = modified_book_name
             
     def update_book(self):
-        for update_book in Book.book_dict:
-            if self.update_book_name == update_book["book_name"]:
-                updated_book_name = input("Enter updated name : ")
-                updated_author_name = input("Enter updated author name : ")
-                updated_book_copies = int(input("Enter number of copies : "))
-                update_book["book_name"] = updated_book_name
-                update_book["book_author_name"] = updated_author_name
-                update_book["book_copies"] = updated_book_copies
-                print("Successfully Book info Updated")
-            else:
-                print("Sorry book not found")
+        sql_update_book()
+        # for update_book in Book.book_dict:
+        #     if self.update_book_name == update_book["book_name"]:
+        #         updated_book_name = input("Enter updated name : ")
+        #         updated_author_name = input("Enter updated author name : ")
+        #         updated_book_copies = int(input("Enter number of copies : "))
+        #         update_book["book_name"] = updated_book_name
+        #         update_book["book_author_name"] = updated_author_name
+        #         update_book["book_copies"] = updated_book_copies
+        #         print("Successfully Book info Updated")
+        #     else:
+        #         print("Sorry book not found")
     def update_user(self):
         for update_user in User.user_librarian_dict:
             if self.update_book_name == update_user["user_name"]:
@@ -191,6 +193,7 @@ class Librarian(Book):
             if book["book_name"] == self.update_book_name:
                 del Book.book_dict[index] 
                 print("Book deleted successfully")
+        sql_delete_book()
     def delete_user(self):
         for index, user in enumerate(User.user_librarian_dict):
             if user["user_name"] == self.update_book_name:
