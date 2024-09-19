@@ -19,16 +19,16 @@ def sql_create_table_user():
 def sql_create_table_borrow_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
-    table_query = '''CREATE TABLE IF NOT EXISTS borrow_book (book_id integer, book_name text,book_author_name text,book_copies integer)'''
+    table_query = '''CREATE TABLE IF NOT EXISTS borrow_book (book_id integer, book_name text,book_author_name text,book_genre text,book_isbn text,book_copies integer,available text)'''
     my_cursor.execute(table_query)
     print('Borrow book Table created...')
     connection.close()
-    
+
 def sql_create_user():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
     user_name = input ("Enter user name : ")
-    user_id =id(user_name)
+    user_id = id(user_name)
     user_password = input ("Enter user password : ")
     user_confirm_password = input ("Enter user confirm password : ")
     role = "user"
@@ -47,8 +47,22 @@ def sql_create_user():
         print('Check your passwords')
 
 def sql_login():
-    pass
-        
+    connection = sqlite3.connect("library.db")
+    my_cursor = connection.cursor()
+    user_name = input("Enter user name : ")
+    user_password = input("Enter user password : ")
+    table_list = my_cursor.execute("""select name from sqlite_master where type='table' and name = 'users';""").fetchall()
+    if table_list == []:
+        print('No table found')
+    else:
+        select = "SELECT * FROM users WHERE user_name=? AND user_password=?"
+        my_cursor.execute(select,(user_name,user_password))
+        row = my_cursor.fetchone()
+        if row == None:
+            print("No user found")
+        else:
+            print(f"---Welcome to DB Library {row[1]}---")
+                     
 def sql_add_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -69,7 +83,28 @@ def sql_add_book():
         print("Data added to DB")
     connection.commit()
     connection.close()
-    
+
+def sql_borrow_book():
+    connection = sqlite3.connect("library.db")
+    my_cursor = connection.cursor() 
+    book_name_borrow = input ("Enter book name you want to borrow : ")
+    insert_borrow_book = "INSERT INTO borrow_book(book_id,book_name,book_author_name,book_genre,book_isbn,book_copies,available) values(?,?,?,?,?,?,?)"
+    table_list = my_cursor.execute("""select name from sqlite_master where type='table' and name = 'borrow_book';""").fetchall()
+    if table_list == []:
+        sql_create_table_borrow_book()
+    select_query = "SELECT * FROM books WHERE book_name=?"
+    my_cursor.execute(select_query,(book_name_borrow,))
+    row = my_cursor.fetchone()
+    print(row[1])
+    if row == None:
+        print("Sorry no book found")           
+    else:
+        print(row)
+        my_cursor.execute(insert_borrow_book,(row[0],row[1],row[2],row[3],row[4],row[5],row[6],))
+        print("Data added to borrow book DB")
+        connection.commit()
+    connection.close()
+        
 def sql_update_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -178,3 +213,14 @@ def sql_show_users():
         print(tabulate.tabulate(rows,headers=("Id","User Name","User password","Role")))
         connection.commit()
         connection.close()
+
+while True:
+    print('1. add book')
+    print('2. borrow book')
+    user_choice = input('Enter your choice : ')
+    if user_choice == '1':
+        sql_add_book()
+    elif user_choice == '2':
+        sql_borrow_book()
+    elif user_choice == '0':
+        break

@@ -89,6 +89,7 @@ class User(Book):
         }
     
     def login(self):
+        sql_login()
         if len(User.user_librarian_dict) > 0:
             for user in User.user_librarian_dict:                   
                 if (
@@ -109,44 +110,45 @@ class User(Book):
         print(User.user_librarian_dict)
 
     def borrow_book(self):
-        for book in Book.book_dict:
-            if (
-                self.borrow_book_name == book["book_name"]
-                and book["available"] == "yes"
-                and book["book_copies"] > 0
-            ):
-                book["book_copies"] = book["book_copies"] - 1
-                if book["book_copies"] == 0:
-                    book["available"] = "no"
-                User.borrow_book_dict.append(book)
-                print("-----Borrowed Books-----")
-                print()
+        sql_borrow_book()
+        # for book in Book.book_dict:
+        #     if (
+        #         self.borrow_book_name == book["book_name"]
+        #         and book["available"] == "yes"
+        #         and book["book_copies"] > 0
+        #     ):
+        #         book["book_copies"] = book["book_copies"] - 1
+        #         if book["book_copies"] == 0:
+        #             book["available"] = "no"
+        #         User.borrow_book_dict.append(book)
+        #         print("-----Borrowed Books-----")
+        #         print()
 
-                for book in self.borrow_book_dict:
-                    print(
-                        "ID : ",
-                        book["book_id"],
-                        "\t",
-                        "Book Name : ",
-                        book["book_name"],
-                        "\t",
-                        "Author : ",
-                        book["book_author_name"],
-                        "\t",
-                        "Genre :",
-                        book["book_genre"],
-                        "\t",
-                        "ISBN :",
-                        book["book_isbn"],
-                        "\t",
-                        "Copy :",
-                        book["book_copies"],
-                        "\t",
-                        "Status : ",
-                        book["available"],
-                    )
-            else:
-                print("Not available")
+        #         for book in self.borrow_book_dict:
+        #             print(
+        #                 "ID : ",
+        #                 book["book_id"],
+        #                 "\t",
+        #                 "Book Name : ",
+        #                 book["book_name"],
+        #                 "\t",
+        #                 "Author : ",
+        #                 book["book_author_name"],
+        #                 "\t",
+        #                 "Genre :",
+        #                 book["book_genre"],
+        #                 "\t",
+        #                 "ISBN :",
+        #                 book["book_isbn"],
+        #                 "\t",
+        #                 "Copy :",
+        #                 book["book_copies"],
+        #                 "\t",
+        #                 "Status : ",
+        #                 book["available"],
+        #             )
+        #     else:
+        #         print("Not available")
 
     def return_book(self):
         for return_book in User.borrow_book_dict:
