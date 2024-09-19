@@ -1,5 +1,6 @@
 import sqlite3
 import tabulate
+import hashlib
 def sql_create_table_books():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -95,16 +96,30 @@ def sql_borrow_book():
     select_query = "SELECT * FROM books WHERE book_name=?"
     my_cursor.execute(select_query,(book_name_borrow,))
     row = my_cursor.fetchone()
-    print(row[1])
+    update_query_copy = "UPDATE books SET book_copies=? WHERE book_name=?"
+    update_query_available = "UPDATE books SET available=? WHERE book_name=?"
+    my_cursor.execute(update_query_copy,(row[5]-1,book_name_borrow),)
+    if row[5] == 0:
+        my_cursor.execute(update_query_available,('no',book_name_borrow),)
+        my_cursor.execute(update_query_copy,(0,book_name_borrow),)       
+    print(row)
     if row == None:
         print("Sorry no book found")           
     else:
         print(row)
-        my_cursor.execute(insert_borrow_book,(row[0],row[1],row[2],row[3],row[4],row[5],row[6],))
-        print("Data added to borrow book DB")
-        connection.commit()
+        if row[6] == 'no':
+            print("The book is out of stock")
+        else:
+            my_cursor.execute(insert_borrow_book,(row[0],row[1],row[2],row[3],row[4],row[5],row[6],))
+            print("Book added to (borrow book) table")
+            connection.commit()
     connection.close()
-        
+
+def sql_return_book():
+    connection = sqlite3.connect("library.db")
+    my_cursor = connection.cursor()
+    book_name_return = input ("Enter book name you want to return : ")
+     
 def sql_update_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
@@ -217,10 +232,16 @@ def sql_show_users():
 while True:
     print('1. add book')
     print('2. borrow book')
+    print('3. delete book')
+    print('4. delete user')
     user_choice = input('Enter your choice : ')
     if user_choice == '1':
         sql_add_book()
     elif user_choice == '2':
         sql_borrow_book()
+    elif user_choice == '3':
+        sql_delete_book()
+    elif user_choice == '4':
+        sql_delete_user()
     elif user_choice == '0':
         break
