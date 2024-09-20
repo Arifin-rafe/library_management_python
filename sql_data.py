@@ -12,7 +12,7 @@ def sql_create_table_books():
 def sql_create_table_user():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
-    table_query = '''CREATE TABLE IF NOT EXISTS users (user_id integer, user_name text,user_password text,role text)'''
+    table_query = '''CREATE TABLE IF NOT EXISTS users (user_id INTEGER, user_name TEXT,user_password TEXT,role TEXT)'''
     my_cursor.execute(table_query)
     print('User Table created...')
     connection.close()
@@ -20,7 +20,7 @@ def sql_create_table_user():
 def sql_create_table_borrow_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
-    table_query = '''CREATE TABLE IF NOT EXISTS borrow_book (book_id integer, book_name text,book_author_name text,book_genre text,book_isbn text,book_copies integer,available text)'''
+    table_query = '''CREATE TABLE IF NOT EXISTS borrow_book (book_id INTEGER, book_name TEXT,book_author_name TEXT,book_genre TEXT,book_isbn TEXT,book_copies INTEGER,available TEXT)'''
     my_cursor.execute(table_query)
     print('Borrow book Table created...')
     connection.close()
@@ -31,6 +31,10 @@ def sql_create_user():
     user_name = input ("Enter user name : ")
     user_id = id(user_name)
     user_password = input ("Enter user password : ")
+    encoded_password = user_password.encode('utf-8')
+    hashed_encode_password = hashlib.sha256(encoded_password)
+    hashed_password = hashed_encode_password.hexdigest()
+     
     user_confirm_password = input ("Enter user confirm password : ")
     role = "user"
     insert_query = "INSERT INTO users(user_id,user_name,user_password,role) values(?,?,?,?)"
@@ -38,9 +42,9 @@ def sql_create_user():
     if user_password == user_confirm_password:
         if table_list == []:
             sql_create_table_user()
-            my_cursor.execute(insert_query,(user_id,user_name,user_password,role))
+            my_cursor.execute(insert_query,(user_id,user_name,hashed_password,role,))
         else:
-            my_cursor.execute(insert_query,(user_id,user_name,user_password,role))
+            my_cursor.execute(insert_query,(user_id,user_name,hashed_password,role,))
             print("Data added to user DB and ID created")
             connection.commit()
             connection.close()
@@ -56,8 +60,8 @@ def sql_login():
     if table_list == []:
         print('No table found')
     else:
-        select = "SELECT * FROM users WHERE user_name=? AND user_password=?"
-        my_cursor.execute(select,(user_name,user_password))
+        select_user = "SELECT * FROM users WHERE user_name=? AND user_password=?"
+        my_cursor.execute(select_user,(user_name,user_password))
         row = my_cursor.fetchone()
         if row == None:
             print("No user found")
