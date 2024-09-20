@@ -171,14 +171,17 @@ def sql_update_user():
 def sql_delete_book():
     connection = sqlite3.connect("library.db")
     my_cursor = connection.cursor()
-    book_name = input ("Enter book name you want to delete : ")
+    book_name_delete = input ("Enter book name you want to delete : ")
     delete_query = "DELETE FROM books WHERE book_name=?"
+    select_query = "SELECT * FROM books WHERE book_name=?"
     table_list = my_cursor.execute("""select name from sqlite_master where type='table' and name = 'books';""").fetchall()
-    if book_name == delete_query:
+    my_cursor.execute(select_query,(book_name_delete,))
+    fetched_delete_data = my_cursor.fetchone()
+    if book_name_delete == fetched_delete_data[1]:
         if table_list == []:
             print('Sorry no table found')
         else:
-            my_cursor.execute(delete_query,(book_name,))
+            my_cursor.execute(delete_query,(book_name_delete,))
             print("Book Data deleted in DB")
             connection.commit()
             connection.close()
@@ -229,19 +232,19 @@ def sql_show_users():
         connection.commit()
         connection.close()
 
-while True:
-    print('1. add book')
-    print('2. borrow book')
-    print('3. delete book')
-    print('4. delete user')
-    user_choice = input('Enter your choice : ')
-    if user_choice == '1':
-        sql_add_book()
-    elif user_choice == '2':
-        sql_borrow_book()
-    elif user_choice == '3':
-        sql_delete_book()
-    elif user_choice == '4':
-        sql_delete_user()
-    elif user_choice == '0':
-        break
+# while True:
+#     print('1. add book')
+#     print('2. borrow book')
+#     print('3. delete book')
+#     print('4. delete user')
+#     user_choice = input('Enter your choice : ')
+#     if user_choice == '1':
+#         sql_add_book()
+#     elif user_choice == '2':
+#         sql_borrow_book()
+#     elif user_choice == '3':
+#         sql_delete_book()
+#     elif user_choice == '4':
+#         sql_delete_user()
+#     elif user_choice == '0':
+#         break
