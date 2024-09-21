@@ -254,10 +254,11 @@ while active_user:
                 my_user_login = User(user_name_input, user_password_input, None, None)            
                 my_user_login.login()
                 #solve here
-                if len(User.user_librarian_dict) > 0:
-                    running = True
-                else:
-                    running = False
+                running = True
+                # if len(User.user_librarian_dict) > 0:
+                #     running = True
+                # else:
+                #     running = False
                 while running: 
                     print("(1) Borrow book")        
                     print("(2) Return book")
