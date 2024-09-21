@@ -249,22 +249,3 @@ def sql_show_users():
         connection.commit()
         connection.close()
 
-# while True:
-#     print('1. add book')
-#     print('2. borrow book')
-#     print('3. return book')
-#     print('4. delete book')
-#     print('5. delete user')
-#     user_choice = input('Enter your choice : ')
-#     if user_choice == '1':
-#         sql_add_book()
-#     elif user_choice == '2':
-#         sql_borrow_book()
-#     elif user_choice == '3':
-#         sql_return_book()
-#     elif user_choice == '4':
-#         sql_delete_book()
-#     elif user_choice == '5':
-#         sql_delete_user()
-#     elif user_choice == '0':
-#         break
