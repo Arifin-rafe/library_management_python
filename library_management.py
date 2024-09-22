@@ -21,8 +21,6 @@ class User(Book):
         sql_return_book()
         
 class Librarian(Book):
-    def __init__(self, modified_book_name=None):
-        self.update_book_name = modified_book_name
             
     def update_book(self):
         sql_update_book()
