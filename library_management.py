@@ -1,41 +1,12 @@
 from sql_data import *
 class Book:
-    def __init__(
-        self,
-        book_name=None,
-        book_author_name=None,
-        book_genre=None,
-        book_isbn=None,
-        book_copies=None,
-        available="yes",
-    ):
-        self.book_id = id(book_name)
-        self.book_name = book_name
-        self.book_author_name = book_author_name
-        self.book_genre = book_genre
-        self.book_isbn = book_isbn
-        self.book_copies = book_copies
-        self.available = available
-
     def add_book(self):
         sql_add_book()
         
-
     def show_book(self):
         sql_show_books()
         
 class User(Book):
-    
-    def __init__(
-        self, user_name=None, user_password=None, role=None, taken_book_name=None
-    ):
-        self.user_id = id(user_name)
-        self.user_name = user_name
-        self.user_password = user_password
-        self.role = role
-        self.borrow_book_name = taken_book_name
-        self.return_book_name = taken_book_name
-
     
     def login(self):
         sql_login()
@@ -83,14 +54,10 @@ while active_user:
             print("2. Create Account")
             
             user_sign_in_choice = input("Please choose from here : ")
-            if user_sign_in_choice == "1":
-                user_name_input = input("Please input user name : ")
-                user_password_input = input("Please input user password : ")
-                my_user_login = User(user_name_input, user_password_input, None, None)            
-                my_user_login.login()
-                
-                running = True
-                
+            if user_sign_in_choice == "1":               
+                my_user_login = User()            
+                my_user_login.login()                
+                running = True               
                 while running: 
                     print("(1) Borrow book")        
                     print("(2) Return book")
@@ -99,12 +66,10 @@ while active_user:
                     print()       
                     user_choice = input("Choose an option : ")
                     if user_choice == "1":
-                        borrow_book_name_input = input("Enter borrow book name : ")
-                        my_borrow_book = User(None, None, None, borrow_book_name_input)
+                        my_borrow_book = User()
                         my_borrow_book.borrow_book()
                     elif user_choice == "2":
-                        return_book_name_input = input("Provide return book name : ")
-                        my_return_book = User(return_book_name_input)
+                        my_return_book = User()
                         my_return_book.return_book()
                     elif user_choice =="3":
                         my_show_book = Book()
@@ -113,19 +78,10 @@ while active_user:
                         print("You logged out as user")
                         running = False
             elif user_sign_in_choice == "2":
-                    user_name_input = input("Please input user name : ")
-                    user_password_input = input("Please input user password : ")
-                    user_confirm_password_input = input("Please input confirm password : ")
-                    if user_confirm_password_input == user_confirm_password_input:
-                        my_create_account = User(
-                        user_name_input, user_password_input, role="user"
-                    )
+                        my_create_account = User()
                         my_create_account.create_id()
-                    else:
-                        print("Sorry password wont match!!!")
         elif number_input == "2":
-                print("1. Login as librarian")
-                
+                print("1. Login as librarian")             
                 user_sign_in_choice = input("Please choose from here : ")
                 if user_sign_in_choice == "1":
                     librarian_name_input = input("Please input librarian name : ")
@@ -142,43 +98,21 @@ while active_user:
                             print("7. Show users")
                             print("0 to logout")
                             user_choice = input("Choose an option : ")
-                            if user_choice == "1":
-                                book_name_input = input("Enter Book name : ")
-                                book_author_input = input("Enter Book author : ")
-                                book_genre_input = input("Enter Book genre : ")
-                                book_isbn_input = input("Enter Book ISBN : ")
-                                book_copies_input = int(input("Enter Book copies : "))
-                                my_add_book = Book(
-                                book_name_input,
-                                book_author_input,
-                                book_genre_input,
-                                book_isbn_input,
-                                book_copies_input,)
+                            if user_choice == "1":                               
+                                my_add_book = Book()
                                 my_add_book.add_book()
-                                print(my_add_book.show_book())
                             elif user_choice == "2":
-                                update_book_name_input = input(
-                        "Enter the book name you want to update  : "
-                    )
-                                my_update_book = Librarian(update_book_name_input)
+                                
+                                my_update_book = Librarian()
                                 my_update_book.update_book()
                             elif user_choice == "3":
-                                delete_book_name_input = input(
-                            "Enter the book name you want to delete  : "
-                            )
-                                my_delete_book = Librarian(delete_book_name_input)
+                                my_delete_book = Librarian()
                                 my_delete_book.delete_book()
                             elif user_choice == "4":
-                                update_user_name_input = input(
-                            "Enter the user name you want to update  : "
-                            )
-                                my_update_user_name = Librarian(update_user_name_input)
+                                my_update_user_name = Librarian()
                                 my_update_user_name.update_user()
                             elif user_choice == "5":
-                                delete_user_name_input = input(
-                            "Enter the user name you want to delete  : "
-                            )
-                                my_delete_user = Librarian(delete_user_name_input)
+                                my_delete_user = Librarian()
                                 my_delete_user.delete_user()
                             elif user_choice == "6":
                                 my_lib = Book()
@@ -189,7 +123,6 @@ while active_user:
                             elif user_choice =="0":
                                 print("You logged out as a librarian")
                                 librarian_running=False
-                
                     else:
                         print("Sorry (name) or (password) won't match!!!--Try again")
 
