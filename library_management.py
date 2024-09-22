@@ -1,4 +1,3 @@
-import sqlite3
 from sql_data import *
 class Book:
     book_dict = []
@@ -32,41 +31,11 @@ class Book:
 
     def add_book(self):
         sql_add_book()
-        # Book.book_dict.append(self.get_book_info())       
-        # print()
-        # print("Added successfully")
-        # print()
+        
 
     def show_book(self):
         sql_show_books()
-        # print("--------Kn0wledge Library BOOK list--------")
-        # print()
-        # for book in self.book_dict:
-        #     print(
-        #         "ID : ",
-        #         book["book_id"],
-        #         "\t",
-        #         "Book Name : ",
-        #         book["book_name"],
-        #         "\t",
-        #         "Author : ",
-        #         book["book_author_name"],
-        #         "\t",
-        #         "Genre :",
-        #         book["book_genre"],
-        #         "\t",
-        #         "ISBN :",
-        #         book["book_isbn"],
-        #         "\t",
-        #         "Copy :",
-        #         book["book_copies"],
-        #         "\t",
-        #         "Status : ",
-        #         book["available"],
-        #     )
-        #     print("-----------------------------------------")
         
-
 class User(Book):
     borrow_book_dict = []
     user_librarian_dict = []
@@ -91,148 +60,35 @@ class User(Book):
     
     def login(self):
         sql_login()
-        # if len(User.user_librarian_dict) > 0:
-        #     for user in User.user_librarian_dict:                   
-        #         if (
-        #                 user.get("user_name") == self.user_name
-        #                 and user.get("user_password") == self.user_password
-        #             ):
-        #             print("Welcome to the library--- {}".format(user.get("user_name")))                   
-        #         else:
-        #             print("Sorry no id found")                   
-        # else:           
-        #     return print('Create a Id first')
           
     def create_id(self):
         sql_create_user()
-        # User.user_librarian_dict.append(self.get_id())
-        # print("Id created successfully")
-        # print("Please login now")
-        # print(User.user_librarian_dict)
-
+        
     def borrow_book(self):
         sql_borrow_book()
-        # for book in Book.book_dict:
-        #     if (
-        #         self.borrow_book_name == book["book_name"]
-        #         and book["available"] == "yes"
-        #         and book["book_copies"] > 0
-        #     ):
-        #         book["book_copies"] = book["book_copies"] - 1
-        #         if book["book_copies"] == 0:
-        #             book["available"] = "no"
-        #         User.borrow_book_dict.append(book)
-        #         print("-----Borrowed Books-----")
-        #         print()
-
-        #         for book in self.borrow_book_dict:
-        #             print(
-        #                 "ID : ",
-        #                 book["book_id"],
-        #                 "\t",
-        #                 "Book Name : ",
-        #                 book["book_name"],
-        #                 "\t",
-        #                 "Author : ",
-        #                 book["book_author_name"],
-        #                 "\t",
-        #                 "Genre :",
-        #                 book["book_genre"],
-        #                 "\t",
-        #                 "ISBN :",
-        #                 book["book_isbn"],
-        #                 "\t",
-        #                 "Copy :",
-        #                 book["book_copies"],
-        #                 "\t",
-        #                 "Status : ",
-        #                 book["available"],
-        #             )
-        #     else:
-        #         print("Not available")
 
     def return_book(self):
         sql_return_book()
-        # for return_book in User.borrow_book_dict:
-        #     if self.return_book_name == return_book["book_name"]: 
-        #         for books in Book.book_dict:
-        #             if books["book_name"] == self.return_book_name:
-        #                 books["book_copies"] = books["book_copies"] + 1
-        #                 if books["book_copies"] > 0:
-        #                     books["available"] = "yes"
-                
-        # else:
-        #     print("not available")
-        #     print(User.borrow_book_dict)
-
+        
 class Librarian(Book):
     def __init__(self, modified_book_name=None):
         self.update_book_name = modified_book_name
             
     def update_book(self):
         sql_update_book()
-        # for update_book in Book.book_dict:
-        #     if self.update_book_name == update_book["book_name"]:
-        #         updated_book_name = input("Enter updated name : ")
-        #         updated_author_name = input("Enter updated author name : ")
-        #         updated_book_copies = int(input("Enter number of copies : "))
-        #         update_book["book_name"] = updated_book_name
-        #         update_book["book_author_name"] = updated_author_name
-        #         update_book["book_copies"] = updated_book_copies
-        #         print("Successfully Book info Updated")
-        #     else:
-        #         print("Sorry book not found")
+        
     def update_user(self):
         sql_update_user()
-        # for update_user in User.user_librarian_dict:
-        #     if self.update_book_name == update_user["user_name"]:
-        #         updated_user_name = input("Enter updated name : ")
-        #         updated_user_password = input("Enter updated password : ")
-        #         update_user["user_name"] = updated_user_name
-        #         update_user["user_password"] = updated_user_password
-        #         print("Successfully user info Updated")
-            # else:
-            #     print("Sorry book not found")
-
+        
     def delete_book(self):
         sql_delete_book()
-        # for index, book in enumerate(Book.book_dict):
-        #     if book["book_name"] == self.update_book_name:
-        #         del Book.book_dict[index] 
-        #         print("Book deleted successfully")
-        
+         
     def delete_user(self):
         sql_delete_user()
-        # for index, user in enumerate(User.user_librarian_dict):
-        #     if user["user_name"] == self.update_book_name:
-        #         del User.user_librarian_dict[index] 
-        #         print("User deleted successfully")
-        # else:
-        #     print("Sorry No user found")   
+          
     def show_users(self):
         sql_show_users()
-        # print("--------Kn0wledge Library USERS list--------")
-        # print()
-        # if len(User.user_librarian_dict) > 0:
-        #     for user in User.user_librarian_dict:
-        #         print(
-        #         "ID : ",
-        #         user["user_id"],
-        #         "\t",
-        #         "User Name : ",
-        #         user["user_name"],
-        #         "\t",
-        #         "Password : ",
-        #         user["user_password"],
-        #         "\t",
-        #         "Role :",
-        #         user["role"]
-                
-        #     )
-        #     print("-----------------------------------------")
-        # else:
-        #     print("User dict is empty")
-
+        
 active_user = True
 while active_user:
     print("Login in as : ->")
@@ -253,12 +109,9 @@ while active_user:
                 user_password_input = input("Please input user password : ")
                 my_user_login = User(user_name_input, user_password_input, None, None)            
                 my_user_login.login()
-                #solve here
+                
                 running = True
-                # if len(User.user_librarian_dict) > 0:
-                #     running = True
-                # else:
-                #     running = False
+                
                 while running: 
                     print("(1) Borrow book")        
                     print("(2) Return book")
