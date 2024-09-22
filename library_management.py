@@ -1,6 +1,5 @@
 from sql_data import *
 class Book:
-    book_dict = []
     def __init__(
         self,
         book_name=None,
@@ -18,17 +17,6 @@ class Book:
         self.book_copies = book_copies
         self.available = available
 
-    def get_book_info(self):
-        return {
-            "book_id": self.book_id,
-            "book_name": self.book_name,
-            "book_author_name": self.book_author_name,
-            "book_genre": self.book_genre,
-            "book_isbn": self.book_isbn,
-            "book_copies": self.book_copies,
-            "available": self.available,
-        }
-
     def add_book(self):
         sql_add_book()
         
@@ -37,9 +25,7 @@ class Book:
         sql_show_books()
         
 class User(Book):
-    borrow_book_dict = []
-    user_librarian_dict = []
-
+    
     def __init__(
         self, user_name=None, user_password=None, role=None, taken_book_name=None
     ):
@@ -49,14 +35,7 @@ class User(Book):
         self.role = role
         self.borrow_book_name = taken_book_name
         self.return_book_name = taken_book_name
-    
-    def get_id(self):
-        return {
-            "user_id": self.user_id,
-            "user_name": self.user_name,
-            "user_password": self.user_password,
-            "role": self.role,
-        }
+
     
     def login(self):
         sql_login()
